@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お天気ぷよぷよ - 理科5年「天気の変化」</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <header class="game-header">
+            <h1>お天気ぷよぷよ ☀️☔☁️⛄⚡</h1>
+            <p>理科「天気の変化」マスターになろう！同類の天気を4つ繋げてクイズに挑戦！</p>
+        </header>
+
+        <main class="game-container">
+            <aside class="left-panel">
+                <div class="panel-box score-box">
+                    <h2>スコア</h2>
+                    <div id="score" class="score-value">0</div>
+                    <div id="chain-counter" class="chain-value hidden">1連鎖！</div>
+                </div>
+                
+                <div class="panel-box instructions">
+                    <h3>そうさほうほう</h3>
+                    <ul>
+                        <li><kbd>←</kbd> <kbd>→</kbd> : いどう</li>
+                        <li><kbd>↑</kbd> または <kbd>X</kbd> : まわす</li>
+                        <li><kbd>↓</kbd> : ゆっくりおとす</li>
+                        <li><kbd>スペース</kbd> : 一気におとす</li>
+                    </ul>
+                </div>
+                
+                <button id="start-btn" class="btn btn-start">ゲームスタート！</button>
+            </aside>
+
+            <div class="board-frame-container">
+                <div id="game-board" class="game-board">
+                    <!-- JavaScriptでグリッド(6x12)を生成 -->
+                </div>
+            </div>
+
+            <aside class="right-panel">
+                <div class="panel-box next-box">
+                    <h2>つぎの天気</h2>
+                    <div id="next-puyo-board" class="next-puyo-board">
+                        <!-- JSでネクスト表示 -->
+                    </div>
+                </div>
+                <!-- デバッグ用またはリセット用 -->
+            </aside>
+        </main>
+        
+        <!-- モーダル: 共通のオーバーレイ -->
+        <div id="overlay" class="overlay"></div>
+        
+        <!-- 名前入力・トップモーダル -->
+        <div id="name-modal" class="modal">
+            <div class="modal-header quiz-header">
+                <h2>☀️ お天気ぷよぷよ ☀️</h2>
+            </div>
+            <div class="modal-body text-center">
+                <p style="margin-bottom: 0.5rem; font-weight: bold;">あなたの名前をおしえてね！</p>
+                <input type="text" id="player-name" class="name-input" placeholder="なまえ（例: たろう）" maxlength="10">
+                
+                <h3 style="margin-bottom: 0.5rem; font-size: 1rem; color: #1e293b;">👑 これまでのランキング 👑</h3>
+                <div style="max-height: 150px; overflow-y: auto; margin-bottom: 1rem;">
+                    <table class="ranking-table">
+                        <thead><tr><th>順位</th><th>なまえ</th><th>スコア</th></tr></thead>
+                        <tbody id="top-ranking-list">
+                            <!-- JSで挿入 -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <button id="name-submit-btn" class="btn btn-start">決定してスタート！</button>
+            </div>
+        </div>
+        
+        <!-- クイズモーダル -->
+        <div id="quiz-modal" class="modal hidden">
+            <div class="modal-header quiz-header">
+                <h2>☁️ 天気クイズ！ ☁️</h2>
+                <span class="quiz-badge">ぷよを消したボーナスチャンス</span>
+            </div>
+            <div class="modal-body">
+                <p id="quiz-question" class="quiz-question">日本の夏の天気の特徴はどれ？</p>
+                <div id="quiz-choices" class="quiz-choices">
+                    <!-- 選択肢が挿入される -->
+                </div>
+            </div>
+            <div id="quiz-feedback" class="quiz-feedback hidden">
+                <span id="quiz-icon" class="quiz-icon">⭕</span>
+                <p id="quiz-explanation" class="quiz-explanation">解説がここに入ります。</p>
+                <button id="quiz-next-btn" class="btn btn-next hidden">つぎへ</button>
+            </div>
+        </div>
+
+        <!-- ゲームオーバー＆ランキングモーダル -->
+        <div id="game-over-modal" class="modal hidden">
+            <div class="modal-header gameover-header">
+                <h2>ゲームオーバー！</h2>
+            </div>
+            <div class="modal-body text-center">
+                <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">あなたのスコア</p>
+                <div id="final-score" style="font-size: 3rem; color: #ff5722; font-weight: 800; margin-bottom: 0.5rem;">1200</div>
+                <p style="color: #555; margin-bottom: 1rem;">たくさん学んでエライ！</p>
+                
+                <h3 style="margin-bottom: 0.5rem; color: #1e293b;">👑 ランキング 👑</h3>
+                <div style="max-height: 150px; overflow-y: auto; margin-bottom: 1rem;">
+                    <table class="ranking-table">
+                        <thead><tr><th>順位</th><th>なまえ</th><th>スコア</th></tr></thead>
+                        <tbody id="ranking-list">
+                            <!-- JSで挿入 -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <button id="restart-btn" class="btn btn-start" style="margin-top: 0.5rem; display: inline-block;">もういちど遊ぶ</button>
+            </div>
+        </div>
+
+    </div>
+    
+    <!-- Audio Elements (optional for effects, initially just base elements without src, UI only fallback) -->
+    <script src="app.js"></script>
+</body>
+</html>
