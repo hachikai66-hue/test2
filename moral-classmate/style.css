@@ -1,0 +1,410 @@
+:root {
+    --primary: #FF9F1C;
+    --primary-light: #FFBF69;
+    --secondary: #2EC4B6;
+    --secondary-light: #CBF3F0;
+    --bg-color: #F8F9FA;
+    --text-color: #2B2D42;
+    --card-bg: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 1200px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+/* ヘッダー */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    background: var(--primary);
+    color: white;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    font-size: 1.6rem;
+}
+
+#settings-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#settings-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#export-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 20px;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#export-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.checkbox-group label {
+    margin: 0;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+/* メインレイアウト */
+main {
+    display: flex;
+    gap: 20px;
+    flex: 1;
+    min-height: 0; /* flexの子要素がスクロールできるようにするため */
+}
+
+section {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--bg-color);
+}
+
+.section-header h2 {
+    font-size: 1.3rem;
+    color: var(--text-color);
+}
+
+/* ボタン共通 */
+button {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+/* マイクボタン */
+#mic-btn {
+    background: #E0E0E0;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#mic-btn.mic-on {
+    background: #ef476f;
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(239, 71, 111, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(239, 71, 111, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 71, 111, 0); }
+}
+
+/* プライマリボタン (先生用トリガー) */
+.primary-btn {
+    background: var(--secondary);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.primary-btn:hover {
+    background: #25a195;
+    transform: translateY(-2px);
+}
+
+/* リアルタイム文字起こしエリア */
+.transcript-box {
+    flex: 1;
+    overflow-y: auto;
+    background: #fafafa;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.placeholder {
+    color: #999;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.transcript-line {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed #eee;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.transcript-line.final {
+    color: #333;
+}
+
+.transcript-line.interim {
+    color: #999;
+    font-style: italic;
+}
+
+/* チャットエリア */
+.chat-box {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-right: 10px;
+    margin-bottom: 15px;
+}
+
+.message {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.message.user-message {
+    flex-direction: row-reverse;
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+.ai-message .avatar {
+    background: var(--secondary-light);
+    color: var(--secondary);
+}
+
+.user-message .avatar {
+    background: var(--primary-light);
+    color: white;
+}
+
+.bubble {
+    background: #f1f1f1;
+    padding: 15px 20px;
+    border-radius: 20px;
+    max-width: 80%;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.ai-message .bubble {
+    background: var(--secondary-light);
+    border-top-left-radius: 0;
+    color: #1a756b;
+}
+
+.user-message .bubble {
+    background: var(--primary);
+    color: white;
+    border-top-right-radius: 0;
+}
+
+/* 生徒の入力エリア */
+.student-input-area {
+    display: flex;
+    gap: 10px;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#student-input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1.1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#student-input:focus {
+    border-color: var(--primary);
+}
+
+#send-btn {
+    background: var(--primary);
+    color: white;
+    width: 55px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#send-btn:hover {
+    background: #e68f18;
+}
+
+/* モーダル (設定画面) */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(3px);
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 550px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.modal-content h2 {
+    color: var(--text-color);
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-content label {
+    font-weight: bold;
+    color: #555;
+}
+
+.modal-content input, .modal-content textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+}
+
+.modal-content input:focus, .modal-content textarea:focus {
+    border-color: var(--primary);
+}
+
+.modal-content textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+#save-settings-btn {
+    background: var(--primary);
+    color: white;
+    padding: 15px;
+    font-size: 1.2rem;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+#save-settings-btn:hover {
+    background: #e68f18;
+}

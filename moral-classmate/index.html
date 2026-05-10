@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>道徳のクラスメートAI</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 初期設定モーダル -->
+        <div id="settings-modal" class="modal">
+            <div class="modal-content">
+                <h2><i class="fa-solid fa-gear"></i> クラスメートAIの設定</h2>
+                <p>このアプリはGemini APIを利用します。</p>
+                <label for="api-key">Gemini APIキー:</label>
+                <input type="password" id="api-key" placeholder="AI Studioで取得したAPIキーを入力...">
+                
+                <label for="lesson-theme" style="margin-top: 15px;">今日のテーマ・教材（AIに背景を伝えます）:</label>
+                <textarea id="lesson-theme" placeholder="例: 「星野君の二塁打」ルールと友情について..."></textarea>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="tts-toggle" checked>
+                    <label for="tts-toggle">AIの返答を音声で読み上げる</label>
+                </div>
+
+                <button id="save-settings-btn"><i class="fa-solid fa-check"></i> 保存して授業をはじめる</button>
+            </div>
+        </div>
+
+        <header>
+            <h1><i class="fa-solid fa-users"></i> クラスメートAI（道徳の授業）</h1>
+            <div class="header-actions">
+                <button id="export-btn" title="記録を保存"><i class="fa-solid fa-download"></i> 保存</button>
+                <button id="settings-btn" title="設定"><i class="fa-solid fa-gear"></i></button>
+            </div>
+        </header>
+
+        <main>
+            <!-- 左側: 教室の声（リアルタイム文字起こし） -->
+            <section class="transcript-section">
+                <div class="section-header">
+                    <h2><i class="fa-solid fa-ear-listen"></i> 教室の声（リアルタイム記録）</h2>
+                    <button id="mic-btn" class="mic-off"><i class="fa-solid fa-microphone-slash"></i> 録音開始</button>
+                </div>
+                <div class="transcript-box" id="transcript-box">
+                    <p class="placeholder">マイクをオンにすると、ここにクラスの会話が記録され、AIがそれを「聞いて」理解します。</p>
+                </div>
+            </section>
+
+            <!-- 右側: AIクラスメートのチャット -->
+            <section class="ai-section">
+                <div class="section-header">
+                    <h2><i class="fa-solid fa-robot"></i> クラスメート</h2>
+                    <button id="teacher-trigger-btn" class="primary-btn" title="議論が行き詰まった時に、AIに別の視点を提示させます"><i class="fa-solid fa-lightbulb"></i> 意見を聞く(先生用)</button>
+                </div>
+                
+                <div class="chat-box" id="chat-box">
+                    <div class="message ai-message">
+                        <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                        <div class="bubble">こんにちは！今日はみんなと一緒に道徳の授業に参加するよ。色んな意見を聞けるのが楽しみだな。よろしくね！</div>
+                    </div>
+                </div>
+
+                <div class="student-input-area">
+                    <input type="text" id="student-input" placeholder="AIに話しかける（生徒用）...">
+                    <button id="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/genai": "https://esm.run/@google/genai"
+        }
+      }
+    </script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
